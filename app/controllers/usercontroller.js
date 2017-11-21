@@ -1,16 +1,13 @@
 const userModel = require('../model/userModel')();
 
 module.exports.index = (req, res) => {
-    // para o refresh em tela .. o iniciar .. 
-// console.log(res);
-
+ 
     res.render('site/novouser', {
         erros: {},
         dados: {}
     });
 
    
-  //  console.log('chamou index');
 };
 
 
@@ -20,6 +17,7 @@ module.exports.indexLg = (req, res) => {
         retornolg: '',
         
     });
+    //console.log('index login');
 
    
   
@@ -62,7 +60,7 @@ module.exports.store = (req, res) => {
 module.exports.login = (req, res) => {
     const dados = req.body
 
-    //const retornolg = 'acesso negado';
+    
 
     //req.assert('email', 'Email Requerido!').notEmpty();
 
@@ -75,12 +73,13 @@ module.exports.login = (req, res) => {
 
             if (resultado.length !== 0) {
 
-                //req.session.iduser = true;
-                global.iduserlog = resultado[0];
+                global.iduserlog = resultado[0].iduser;
 
-                console.log(iduserlog);
-                res.redirect('/home')
-                console.log('login sucesso');
+               // console.log(global.iduserlog)
+                console.log(resultado[0].iduser)
+                res.render('site/home', {
+                    retornolg: resultado[0].nmuser
+                })
 
             } else {
                 //console.log('Acesso negado!');

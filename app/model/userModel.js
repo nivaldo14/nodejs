@@ -39,8 +39,8 @@ module.exports = () => {
         
         //console.log(pwd)
         const con = db();
-        con.query('select iduser from users where email =? and senha =? and sta=?', [dados.email, pwd, 'A'], retorno);
-        //console.log(retorno);
+        con.query('select iduser,nmuser from users where email =? and senha =? and sta=?', [dados.email, pwd, 'A'], retorno);
+        //console.log("Altenticou usermodel");
         
     };
     //console.log(this);

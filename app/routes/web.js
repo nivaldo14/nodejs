@@ -1,13 +1,9 @@
 const userController = require('../controllers/usercontroller');
 
 
-
-
-
 module.exports = (app) => {
 
-
-    app.use(function (req, res, next) {
+    /*app.use(function (req, res, next) {
         //console.log(global.iduserlog === undefined)
         if (global.iduserlog == undefined) {
             //console.log('entro undefined')
@@ -17,23 +13,35 @@ module.exports = (app) => {
         } else {
             next();
         }
-    });
+    });*/
 
+    function logado(req, res, next){
+            //console.log('chamou funcao');
+            if (global.iduserlog == undefined) {
+                return res.render('site/login', {
+                    retornolg:''
+                });
+            } else {
+                next();
+            }
+        
 
-
+    }
 
     app.get('/', (req, res) => {
         //res.render('site/login')
+        
         userController.indexLg(req, res);
     });
 
     app.post('/', (req, res) => {
+        
         userController.login(req, res);
     });
     // post login para home
     app.post('/home', (req, res) => {
         //console.log('entrou web.js rotas quando houve post')
-
+        
         userController.login(req, res);
         //res.render('site/home')
     });
@@ -47,12 +55,11 @@ module.exports = (app) => {
         userController.store(req, res)
 
     });
-    app.get('/home', (req, res) => {
-        console.log('requisicao pagina')
-
-        //console.log(req.session.authenticated );
+    app.get('/home', (req, res,next) => {
+        logado(req,res,next);
+        console.log('requisicao pagina home');
         //res.render('site/home',{user:req.user});
-        res.render('site/home');
+        res.render('site/home',{retornolg:retornolg});
 
     });
 
